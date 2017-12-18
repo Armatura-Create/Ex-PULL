@@ -1,5 +1,6 @@
 package com.example.alex.ruletkacsgo.ui.activity.main;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
+import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,7 +43,8 @@ public class MainActivity extends AppCompatActivity
         mBinding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        mBinding.navView.setNavigationItemSelectedListener(this);
+        mBinding.navLeft.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -65,8 +71,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_logout:
+                Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -78,22 +90,29 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        switch (id){
-            case R.id.nav_camera:
-                // Handle the camera action
+        switch (id) {
+            case R.id.nav_shop:
+                Snackbar.make(toolbar, "Shop", Snackbar.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_gallery:
-                Snackbar.make(toolbar, "Gallery", Snackbar.LENGTH_SHORT).show();
+
+            case R.id.nav_deposit:
+                Snackbar.make(toolbar, "Deposit", Snackbar.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_slideshow:
-                Snackbar.make(toolbar, "Slide", Snackbar.LENGTH_SHORT).show();
+
+            case R.id.nav_referrals:
+                Snackbar.make(toolbar, "Referrals", Snackbar.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_manage:
+
+            case R.id.nav_top:
+                Snackbar.make(toolbar, "Top", Snackbar.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_share:
-                Snackbar.make(toolbar, "Share", Snackbar.LENGTH_SHORT).show();
+
+            case R.id.nav_crash:
+                Snackbar.make(toolbar, "Crash", Snackbar.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_send:
+
+            case R.id.nav_roulette:
+                Snackbar.make(toolbar, "Roulette", Snackbar.LENGTH_SHORT).show();
                 break;
         }
 

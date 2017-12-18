@@ -5,4 +5,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="shop">Shop</string>
+    <string name="deposit">Deposit</string>
+    <string name="referrals">Referrals</string>
+    <string name="top">Top</string>
+    <string name="games">Games</string>
+    <string name="crash">Crash</string>
+    <string name="roulette">Roulette</string>
+    <string name="action_logout">Log Out</string>
+    <string name="send">Send</string>
+    <string name="chat">Chat</string>
 </resources>
