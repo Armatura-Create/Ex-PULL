@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.alex.ruletkacsgo"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -44,6 +44,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
     compile 'com.mxn.soul:flowingdrawer-core:2.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 
     //EventBus
     compile 'org.greenrobot:eventbus:3.1.1'

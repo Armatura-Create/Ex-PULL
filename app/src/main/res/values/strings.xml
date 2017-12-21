@@ -15,4 +15,9 @@
     <string name="action_logout">Log Out</string>
     <string name="send">Send</string>
     <string name="chat">Chat</string>
+    <string name="support">Support</string>
+    <string name="about">About</string>
+    <string name="help_and_feetback"><![CDATA[Help & feedback]]></string>
+    <string name="guide">Guide to APP</string>
+    <string name="settings">Settings</string>
 </resources>

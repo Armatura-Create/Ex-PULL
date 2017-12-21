@@ -2,50 +2,68 @@ package com.example.alex.ruletkacsgo.ui.activity.main;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
 import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Toolbar toolbar;
     private ActivityMainBinding mBinding;
+    private SmartTabLayout mTabLayout;
+    private View mDecorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Убераем панель уведомлений
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        mBinding.appBarMain.fab.setOnClickListener(v -> {
-            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        });
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mBinding.drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mBinding.drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        mDecorView = getWindow().getDecorView();
+        mTabLayout = findViewById(R.id.tab_main);
 
         mBinding.navLeft.setNavigationItemSelectedListener(this);
 
+        //set viewpager adapter
+        mBinding.viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        mTabLayout.setViewPager(mBinding.viewPager);
     }
+
+    //Скрывает системные панели
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -92,27 +110,33 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_shop:
-                Snackbar.make(toolbar, "Shop", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mBinding.drawerLayout, "Shop", Snackbar.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_deposit:
-                Snackbar.make(toolbar, "Deposit", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mBinding.drawerLayout, "Deposit", Snackbar.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_referrals:
-                Snackbar.make(toolbar, "Referrals", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mBinding.drawerLayout, "Referrals", Snackbar.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_top:
-                Snackbar.make(toolbar, "Top", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mBinding.drawerLayout, "Top", Snackbar.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_crash:
-                Snackbar.make(toolbar, "Crash", Snackbar.LENGTH_SHORT).show();
+                mBinding.viewPager.setCurrentItem(0);
+                Snackbar.make(mBinding.drawerLayout, "Crash", Snackbar.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_roulette:
-                Snackbar.make(toolbar, "Roulette", Snackbar.LENGTH_SHORT).show();
+                mBinding.viewPager.setCurrentItem(1);
+                Snackbar.make(mBinding.drawerLayout, "Roulette", Snackbar.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_chat:
+                mBinding.viewPager.setCurrentItem(2);
+                Snackbar.make(mBinding.drawerLayout, "Roulette", Snackbar.LENGTH_SHORT).show();
                 break;
         }
 

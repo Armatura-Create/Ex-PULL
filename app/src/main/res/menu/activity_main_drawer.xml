@@ -21,18 +21,37 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/top"/>
     </group>
+    <item android:title=""></item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_crash"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/crash"/>
+        <item
+            android:id="@+id/nav_roulette"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/roulette"/>
+    </group>
 
-    <item android:title="@string/games">
-        <menu>
+    <group>
+        <item
+            android:id="@+id/nav_chat"
+            android:title="@string/chat"/>
+        >
+    </group>
+
+    <group>
             <item
-                android:id="@+id/nav_crash"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/crash"/>
+                android:id="@+id/nav_support"
+                android:title="@string/help_and_feetback"/>
+
             <item
-                android:id="@+id/nav_roulette"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/roulette"/>
-        </menu>
-    </item>
+                android:id="@+id/nav_guide"
+                android:title="@string/guide"/>
+
+            <item
+                android:id="@+id/nav_about"
+                android:title="@string/about"/>
+    </group>
 
 </menu>
