@@ -1,10 +1,12 @@
 package com.example.alex.ruletkacsgo.ui.activity.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -22,10 +24,10 @@ import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding mBinding;
-    private SmartTabLayout mTabLayout;
     private View mDecorView;
+    private MainPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +41,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        //Создаем объект Presenter
+        mPresenter = new MainPresenter(this, mBinding);
+
         mDecorView = getWindow().getDecorView();
-        mTabLayout = findViewById(R.id.tab_main);
 
-        mBinding.navLeft.setNavigationItemSelectedListener(this);
+        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(this);
 
-        //set viewpager adapter
-        mBinding.viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-        mTabLayout.setViewPager(mBinding.viewPager);
     }
 
     //Скрывает системные панели
@@ -64,14 +66,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Called when pointer capture is enabled or disabled for the current window.
+     *
+     * @param hasCapture True if the window has pointer capture.
+     */
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
 
     @Override
     public void onBackPressed() {
-        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
             super.onBackPressed();
-        }
     }
 
     @Override
@@ -107,40 +115,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        switch (id) {
-            case R.id.nav_shop:
-                Snackbar.make(mBinding.drawerLayout, "Shop", Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_deposit:
-                Snackbar.make(mBinding.drawerLayout, "Deposit", Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_referrals:
-                Snackbar.make(mBinding.drawerLayout, "Referrals", Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_top:
-                Snackbar.make(mBinding.drawerLayout, "Top", Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_crash:
-                mBinding.viewPager.setCurrentItem(0);
-                Snackbar.make(mBinding.drawerLayout, "Crash", Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_roulette:
-                mBinding.viewPager.setCurrentItem(1);
-                Snackbar.make(mBinding.drawerLayout, "Roulette", Snackbar.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_chat:
-                mBinding.viewPager.setCurrentItem(2);
-                Snackbar.make(mBinding.drawerLayout, "Roulette", Snackbar.LENGTH_SHORT).show();
-                break;
-        }
-
-        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        mPresenter.clickNavigation(id);
         return true;
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }
