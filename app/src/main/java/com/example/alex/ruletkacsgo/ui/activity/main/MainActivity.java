@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity
 
         mBinding.pager.addOnPageChangeListener(this);
         mBinding.pager.setOffscreenPageLimit(5);
-        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(listener);
 
         mDecorView = getWindow().getDecorView();
 
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
@@ -118,14 +117,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        mPresenter.clickNavigation(id);
-        return true;
-    }
 
     @Override
     public Context getContext() {
@@ -158,37 +149,36 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.crash: {
-                    mBinding.pager.setCurrentItem(0);
-                    break;
-                }
-                case R.id.roulette: {
-                    mBinding.pager.setCurrentItem(1);
-                    break;
-                }
-
-                case R.id.chat: {
-                    mBinding.pager.setCurrentItem(2);
-                    break;
-                }
-                case R.id.shop: {
-                    mBinding.pager.setCurrentItem(3);
-                    break;
-                }
-                case R.id.profile: {
-                    mBinding.pager.setCurrentItem(4);
-                    break;
-                }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.crash: {
+                mBinding.pager.setCurrentItem(0);
+                break;
             }
-            return true;
-        }
+            case R.id.roulette: {
+                mBinding.pager.setCurrentItem(1);
+                break;
+            }
 
-    };
+            case R.id.chat: {
+                mBinding.pager.setCurrentItem(2);
+                break;
+            }
+            case R.id.shop: {
+                mBinding.pager.setCurrentItem(3);
+                break;
+            }
+            case R.id.profile: {
+                mBinding.pager.setCurrentItem(4);
+                break;
+            }
+        }
+        return true;
+    }
+
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

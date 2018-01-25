@@ -37,23 +37,6 @@ public class MainPresenter implements MainContract.EventListener {
         mBinding = binding;
     }
 
-    @Override
-    public void clickNavigation(int id) {
-        switch (id) {
-            case R.id.crash:
-//                Snackbar.make(mBinding.bottomNavigation, "Map", Snackbar.LENGTH_SHORT).show();
-                break;
-            case R.id.roulette:
-//                Snackbar.make(mBinding.bottomNavigation, "Mail", Snackbar.LENGTH_SHORT).show();
-                break;
-            case R.id.shop:
-//                Snackbar.make(mBinding.bottomNavigation, "Dial", Snackbar.LENGTH_SHORT).show();
-                break;
-
-
-        }
-
-    }
 
     @Override
     public void setUpViewPager(ViewPager pager) {

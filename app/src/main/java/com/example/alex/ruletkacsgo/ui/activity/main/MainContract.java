@@ -13,7 +13,6 @@ public interface MainContract {
     }
 
     interface EventListener {
-        void clickNavigation(int id);
         void setUpViewPager(ViewPager pager);
     }
 }
