@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -21,13 +22,15 @@ import android.widget.Toast;
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
 import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
+import com.example.alex.ruletkacsgo.utils.StaticValues;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener, IFragmentListener {
     private ActivityMainBinding mBinding;
     private View mDecorView;
     private MainPresenter mPresenter;
+    private MenuItem prevMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity
 
         //Создаем объект Presenter
         mPresenter = new MainPresenter(this, mBinding);
+        mPresenter.setUpViewPager(mBinding.pager);
 
         mDecorView = getWindow().getDecorView();
 
@@ -122,5 +126,80 @@ public class MainActivity extends AppCompatActivity
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void replaceFragment(String name) {
+        switch (name) {
+            case StaticValues.FRAGMENT_CRASH: {
+                mBinding.pager.setCurrentItem(0);
+                break;
+            }
+            case StaticValues.FRAGMENT_ROULETTE: {
+                mBinding.pager.setCurrentItem(1);
+                break;
+            }
+            case StaticValues.FRAGMENT_CHAT: {
+                mBinding.pager.setCurrentItem(2);
+                break;
+            }
+            case StaticValues.FRAGMENT_SHOP: {
+                mBinding.pager.setCurrentItem(3);
+                break;
+            }
+            case StaticValues.FRAGMENT_PROFILE: {
+                mBinding.pager.setCurrentItem(4);
+                break;
+            }
+        }
+    }
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.crash: {
+                    mBinding.pager.setCurrentItem(0);
+                    break;
+                }
+                case R.id.roulette: {
+                    mBinding.pager.setCurrentItem(1);
+                    break;
+                }
+
+                case R.id.chat: {
+                    mBinding.pager.setCurrentItem(2);
+                    break;
+                }
+                case R.id.shop: {
+                    mBinding.pager.setCurrentItem(3);
+                    break;
+                }
+                case R.id.profile: {
+                    mBinding.pager.setCurrentItem(4);
+                    break;
+                }
+            }
+            return true;
+        }
+
+    };
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (prevMenuItem != null) prevMenuItem.setChecked(false);
+        else mBinding.bottomNavigation.getMenu().getItem(0).setChecked(false);
+        mBinding.bottomNavigation.getMenu().getItem(position).setChecked(true);
+        prevMenuItem = mBinding.bottomNavigation.getMenu().getItem(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

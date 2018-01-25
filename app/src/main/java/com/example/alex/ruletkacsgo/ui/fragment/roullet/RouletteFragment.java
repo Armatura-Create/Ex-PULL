@@ -2,14 +2,13 @@ package com.example.alex.ruletkacsgo.ui.fragment.roullet;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.ruletkacsgo.R;
 
-public class RoulletGameFragment extends Fragment {
+public class RouletteFragment extends android.support.v4.app.Fragment {
 
     @Nullable
     @Override
@@ -20,5 +19,9 @@ public class RoulletGameFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public static RouletteFragment newInstance() {
+        return new RouletteFragment();
     }
 }

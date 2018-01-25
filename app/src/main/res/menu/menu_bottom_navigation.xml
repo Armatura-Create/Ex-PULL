@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_map"
+        android:id="@+id/crash"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="@string/map"/>
+        android:title="@string/crash"/>
     <item
-        android:id="@+id/action_dial"
+        android:id="@+id/roulette"
         android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="@string/dial" />
+        android:title="@string/roulette" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/chat"
         android:icon="@android:drawable/ic_dialog_email"
-        android:title="@string/mail" />
+        android:title="@string/chat" />
     <item
-        android:id="@+id/action_mail2"
+        android:id="@+id/shop"
         android:icon="@android:drawable/ic_dialog_email"
-        android:title="@string/mail" />
+        android:title="@string/shop" />
     <item
-        android:id="@+id/action_mail3"
+        android:id="@+id/profile"
         android:icon="@android:drawable/ic_dialog_email"
-        android:title="@string/mail" />
+        android:title="@string/profile" />
 </menu>
