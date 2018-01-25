@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity
         mPresenter = new MainPresenter(this, mBinding);
         mPresenter.setUpViewPager(mBinding.pager);
 
+        mBinding.pager.addOnPageChangeListener(this);
+        mBinding.pager.setOffscreenPageLimit(5);
+        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(listener);
+
         mDecorView = getWindow().getDecorView();
 
         mBinding.bottomNavigation.setOnNavigationItemSelectedListener(this);
