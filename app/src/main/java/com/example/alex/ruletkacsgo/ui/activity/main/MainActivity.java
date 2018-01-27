@@ -3,15 +3,15 @@ package com.example.alex.ruletkacsgo.ui.activity.main;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,18 +19,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
 import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
 import com.example.alex.ruletkacsgo.utils.StaticValues;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener, IFragmentListener {
+        implements MainContract.View, IFragmentListener, AHBottomNavigation.OnTabSelectedListener {
     private ActivityMainBinding mBinding;
     private View mDecorView;
     private MainPresenter mPresenter;
-    private MenuItem prevMenuItem;
+    private AHBottomNavigationItem prevMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +58,48 @@ public class MainActivity extends AppCompatActivity
 
         mDecorView = getWindow().getDecorView();
 
-        mBinding.bottomNavigation.setOnNavigationItemSelectedListener(this);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.crash, R.drawable.ic_menu_camera, R.color.colorAccent);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.roulette, R.drawable.ic_menu_camera, R.color.colorAccent);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.chat, R.drawable.ic_menu_camera, R.color.colorAccent);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.shop, R.drawable.ic_menu_camera, R.color.colorAccent);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.profile, R.drawable.ic_menu_camera, R.color.colorAccent);
+
+        mBinding.bottomNavigation.addItem(item1);
+        mBinding.bottomNavigation.addItem(item2);
+        mBinding.bottomNavigation.addItem(item3);
+        mBinding.bottomNavigation.addItem(item4);
+        mBinding.bottomNavigation.addItem(item5);
+
+        mBinding.bottomNavigation.setNotification("1", 2);
+
+        mBinding.bottomNavigation.setOnTabSelectedListener(this);
+
+
+//        mBinding.bottomNavigation.addItem();
+//        mBinding.bottomNavigation.enableAnimation(false);
+//        mBinding.bottomNavigation.enableItemShiftingMode(false);
+//        mBinding.bottomNavigation.enableShiftingMode(false);
+//
+//        // add badge
+//        addBadgeAt(2, 1);
+
+
 
     }
+
+//    private Badge addBadgeAt(int position, int number) {
+//        // add badge
+//        return new QBadgeView(this)
+//                .setBadgeNumber(number)
+//                .setGravityOffset(12, 2, false)
+//                .bindTarget(mBinding.bottomNavigation.getBottomNavigationItemView(position))
+//                .setBadgeBackgroundColor(Color.GREEN);
+//
+////                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+////                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
+////                            Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+////                });
+//    }
 
     //Скрывает системные панели
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -73,11 +116,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Called when pointer capture is enabled or disabled for the current window.
-     *
-     * @param hasCapture True if the window has pointer capture.
-     */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -151,49 +189,51 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.crash: {
-                mBinding.pager.setCurrentItem(0);
-                break;
-            }
-            case R.id.roulette: {
-                mBinding.pager.setCurrentItem(1);
-                break;
-            }
-
-            case R.id.chat: {
-                mBinding.pager.setCurrentItem(2);
-                break;
-            }
-            case R.id.shop: {
-                mBinding.pager.setCurrentItem(3);
-                break;
-            }
-            case R.id.profile: {
-                mBinding.pager.setCurrentItem(4);
-                break;
-            }
-        }
-        return true;
-    }
-
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
 
     @Override
     public void onPageSelected(int position) {
-        if (prevMenuItem != null) prevMenuItem.setChecked(false);
-        else mBinding.bottomNavigation.getMenu().getItem(0).setChecked(false);
-        mBinding.bottomNavigation.getMenu().getItem(position).setChecked(true);
-        prevMenuItem = mBinding.bottomNavigation.getMenu().getItem(position);
+//        if (prevMenuItem != null) prevMenuItem.setChecked(false);
+//        else mBinding.bottomNavigation.getItem(0).setChecked(false);
+//        mBinding.bottomNavigation.getItem(position).setChecked(true);
+        Log.e("onPageSelected: ", String.valueOf(position));
+        prevMenuItem = mBinding.bottomNavigation.getItem(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onTabSelected(int position, boolean wasSelected) {
+        switch (position) {
+            case 0: {
+                mBinding.pager.setCurrentItem(0);
+                break;
+            }
+            case 1: {
+                mBinding.pager.setCurrentItem(1);
+                break;
+            }
+
+            case 2: {
+                mBinding.pager.setCurrentItem(2);
+                mBinding.bottomNavigation.setNotification("", 2);
+                break;
+            }
+            case 3: {
+                mBinding.pager.setCurrentItem(3);
+                break;
+            }
+            case 4: {
+                mBinding.pager.setCurrentItem(4);
+                mBinding.bottomNavigation.setNotification("1", 2);
+                break;
+            }
+        }
+        return true;
     }
 }
