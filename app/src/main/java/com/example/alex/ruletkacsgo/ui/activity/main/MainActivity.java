@@ -3,13 +3,10 @@ package com.example.alex.ruletkacsgo.ui.activity.main;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +23,8 @@ import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
 import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
 import com.example.alex.ruletkacsgo.utils.StaticValues;
 
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
-
 public class MainActivity extends AppCompatActivity
-        implements MainContract.View, IFragmentListener, AHBottomNavigation.OnTabSelectedListener {
+        implements MainContract.View, AHBottomNavigation.OnTabSelectedListener, ViewPager.OnPageChangeListener {
     private ActivityMainBinding mBinding;
     private View mDecorView;
     private MainPresenter mPresenter;
@@ -74,32 +68,7 @@ public class MainActivity extends AppCompatActivity
 
         mBinding.bottomNavigation.setOnTabSelectedListener(this);
 
-
-//        mBinding.bottomNavigation.addItem();
-//        mBinding.bottomNavigation.enableAnimation(false);
-//        mBinding.bottomNavigation.enableItemShiftingMode(false);
-//        mBinding.bottomNavigation.enableShiftingMode(false);
-//
-//        // add badge
-//        addBadgeAt(2, 1);
-
-
-
     }
-
-//    private Badge addBadgeAt(int position, int number) {
-//        // add badge
-//        return new QBadgeView(this)
-//                .setBadgeNumber(number)
-//                .setGravityOffset(12, 2, false)
-//                .bindTarget(mBinding.bottomNavigation.getBottomNavigationItemView(position))
-//                .setBadgeBackgroundColor(Color.GREEN);
-//
-////                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-////                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
-////                            Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-////                });
-//    }
 
     //Скрывает системные панели
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -161,32 +130,6 @@ public class MainActivity extends AppCompatActivity
         return this;
     }
 
-    @Override
-    public void replaceFragment(String name) {
-        switch (name) {
-            case StaticValues.FRAGMENT_CRASH: {
-                mBinding.pager.setCurrentItem(0);
-                break;
-            }
-            case StaticValues.FRAGMENT_ROULETTE: {
-                mBinding.pager.setCurrentItem(1);
-                break;
-            }
-            case StaticValues.FRAGMENT_CHAT: {
-                mBinding.pager.setCurrentItem(2);
-                break;
-            }
-            case StaticValues.FRAGMENT_SHOP: {
-                mBinding.pager.setCurrentItem(3);
-                break;
-            }
-            case StaticValues.FRAGMENT_PROFILE: {
-                mBinding.pager.setCurrentItem(4);
-                break;
-            }
-        }
-    }
-
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -195,11 +138,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageSelected(int position) {
-//        if (prevMenuItem != null) prevMenuItem.setChecked(false);
-//        else mBinding.bottomNavigation.getItem(0).setChecked(false);
-//        mBinding.bottomNavigation.getItem(position).setChecked(true);
         Log.e("onPageSelected: ", String.valueOf(position));
-        prevMenuItem = mBinding.bottomNavigation.getItem(position);
+        mBinding.bottomNavigation.setCurrentItem(position);
     }
 
     @Override
