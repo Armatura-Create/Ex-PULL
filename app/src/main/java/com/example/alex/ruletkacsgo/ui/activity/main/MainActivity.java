@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity
 
         mBinding.bottomNavigation.setOnTabSelectedListener(this);
 
+        mBinding.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+
     }
 
     //Скрывает системные панели
