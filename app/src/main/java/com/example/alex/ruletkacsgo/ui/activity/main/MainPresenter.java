@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
+import com.example.alex.ruletkacsgo.ui.fragment.chat.ChatFragment;
 import com.example.alex.ruletkacsgo.ui.fragment.crash.CrashFragment;
 import com.example.alex.ruletkacsgo.ui.fragment.myprofile.MyProfileFragment;
 import com.example.alex.ruletkacsgo.ui.fragment.roullet.RouletteFragment;
@@ -45,7 +46,7 @@ public class MainPresenter implements MainContract.EventListener {
             FragmentsAdapter adapter = new FragmentsAdapter(activity.getSupportFragmentManager());
             crashFragment = CrashFragment.newInstance();
             rouletteFragment = RouletteFragment.newInstance();
-            chatFragment = CrashFragment.newInstance();
+            chatFragment = ChatFragment.newInstance();
             shopFragment = ShopFragment.newInstance();
             profileFragment = MyProfileFragment.newInstance();
 

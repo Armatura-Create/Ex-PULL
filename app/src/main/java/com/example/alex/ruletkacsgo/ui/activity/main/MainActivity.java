@@ -21,10 +21,12 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
 import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
-import com.example.alex.ruletkacsgo.utils.StaticValues;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements MainContract.View, AHBottomNavigation.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+    private static final int SIGN_IN_REQUEST_CODE = 100;
     private ActivityMainBinding mBinding;
     private View mDecorView;
     private MainPresenter mPresenter;
@@ -69,6 +71,56 @@ public class MainActivity extends AppCompatActivity
         mBinding.bottomNavigation.setOnTabSelectedListener(this);
 
         mBinding.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // Start sign in/sign up activity
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .build(),
+                    SIGN_IN_REQUEST_CODE
+            );
+        } else {
+            // User is already signed in. Therefore, display
+            // a welcome Toast
+            Toast.makeText(this,
+                    "Welcome " + FirebaseAuth.getInstance()
+                            .getCurrentUser()
+                            .getDisplayName(),
+                    Toast.LENGTH_LONG)
+                    .show();
+
+            // Load chat room contents
+            displayChatMessages();
+        }
+
+    }
+
+    private void displayChatMessages() {
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == SIGN_IN_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                Toast.makeText(this,
+                        "Successfully signed in. Welcome!",
+                        Toast.LENGTH_LONG)
+                        .show();
+                displayChatMessages();
+            } else {
+                Toast.makeText(this,
+                        "We couldn't sign you in. Please try again later.",
+                        Toast.LENGTH_LONG)
+                        .show();
+
+                // Close the app
+                finish();
+            }
+        }
 
     }
 
