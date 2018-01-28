@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/crash"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/crash"/>
+    <item
+        android:id="@+id/roulette"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/roulette" />
+    <item
+        android:id="@+id/chat"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/chat" />
+    <item
+        android:id="@+id/shop"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/shop" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/profile" />
+</menu>
