@@ -4,63 +4,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/profile_header"
-            android:orientation="vertical"
-            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            android:background="@color/authui_colorPrimaryDark">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:layout_margin="8dp"
-                android:paddingLeft="8dp"
-                android:gravity="center"
-                android:textAlignment="textStart"
-                android:text="User Name"
-                android:background="@color/authui_colorPrimary"/>
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/profile_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/authui_colorAccent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="40%"/>
+                android:layout_weight="1.3"
+                android:background="@color/authui_colorPrimaryDark"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="8dp"
-                    android:layout_weight="60%"
-                    android:text="Level and other different characteristic"/>
+                    android:layout_weight="3"
+                    android:background="@color/authui_colorPrimary"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:text="User Name"
+                    android:textAlignment="textStart"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="8dp"
+                        android:layout_weight="0.2"
+                        android:background="@color/authui_colorAccent"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="10"
+                        android:text="Level and other different characteristic"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/profile_main"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 </layout>
