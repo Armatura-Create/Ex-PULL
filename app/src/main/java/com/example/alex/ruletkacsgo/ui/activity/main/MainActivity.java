@@ -9,18 +9,15 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.example.alex.ruletkacsgo.R;
 import com.example.alex.ruletkacsgo.databinding.ActivityMainBinding;
-import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,8 +26,10 @@ public class MainActivity extends AppCompatActivity
     private static final int SIGN_IN_REQUEST_CODE = 100;
     private ActivityMainBinding mBinding;
     private View mDecorView;
+    private AHBottomNavigationAdapter navigationAdapter;
     private MainPresenter mPresenter;
-    private AHBottomNavigationItem prevMenuItem;
+    private int[] tabColors;
+    private boolean tapOnBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +42,10 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
+        tapOnBar = true;
+
+        tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         //Создаем объект Presenter
@@ -54,25 +57,21 @@ public class MainActivity extends AppCompatActivity
 
         mDecorView = getWindow().getDecorView();
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.crash, R.drawable.ic_menu_camera, R.color.colorAccent);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.roulette, R.drawable.ic_menu_camera, R.color.colorAccent);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.chat, R.drawable.ic_menu_camera, R.color.colorAccent);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.shop, R.drawable.ic_menu_camera, R.color.colorAccent);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.profile, R.drawable.ic_menu_camera, R.color.colorAccent);
-
-        mBinding.bottomNavigation.addItem(item1);
-        mBinding.bottomNavigation.addItem(item2);
-        mBinding.bottomNavigation.addItem(item3);
-        mBinding.bottomNavigation.addItem(item4);
-        mBinding.bottomNavigation.addItem(item5);
+        navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
+        navigationAdapter.setupWithBottomNavigation(mBinding.bottomNavigation, tabColors);
 
         mBinding.bottomNavigation.setNotification("1", 2);
 
         mBinding.bottomNavigation.setOnTabSelectedListener(this);
 
         mBinding.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+        mBinding.bottomNavigation.setTranslucentNavigationEnabled(true);
+        mBinding.bottomNavigation.setColored(true);
+        mBinding.bottomNavigation.setAccentColor(getResources().getColor(R.color.orange_special));
+        mBinding.bottomNavigation.setInactiveColor(getResources().getColor(R.color.white));
+        mBinding.bottomNavigation.setSelectedBackgroundVisible(true);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             // Start sign in/sign up activity
             startActivityForResult(
                     AuthUI.getInstance()
@@ -100,12 +99,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == SIGN_IN_REQUEST_CODE) {
-            if(resultCode == RESULT_OK) {
+        if (requestCode == SIGN_IN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
                 Toast.makeText(this,
                         "Successfully signed in. Welcome!",
                         Toast.LENGTH_LONG)
@@ -150,34 +148,6 @@ public class MainActivity extends AppCompatActivity
         super.onBackPressed();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        switch (id) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_logout:
-                Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public Context getContext() {
@@ -187,13 +157,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
         Log.e("onPageSelected: ", String.valueOf(position));
         mBinding.bottomNavigation.setCurrentItem(position);
+
     }
 
     @Override
@@ -203,31 +173,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
-        switch (position) {
-            case 0: {
-                mBinding.pager.setCurrentItem(0);
-                break;
-            }
-            case 1: {
-                mBinding.pager.setCurrentItem(1);
-                break;
-            }
-
-            case 2: {
-                mBinding.pager.setCurrentItem(2);
-                mBinding.bottomNavigation.setNotification("", 2);
-                break;
-            }
-            case 3: {
-                mBinding.pager.setCurrentItem(3);
-                break;
-            }
-            case 4: {
-                mBinding.pager.setCurrentItem(4);
-                mBinding.bottomNavigation.setNotification("1", 2);
-                break;
-            }
+        Log.e("onTabSelected: ", String.valueOf(position));
+        tapOnBar = false;
+        mBinding.pager.setCurrentItem(position, true);
+        if (position == 2) {
+            mBinding.bottomNavigation.setNotification("", 2);
+        } else {
+            mBinding.bottomNavigation.setNotification("1", 2);
         }
         return true;
     }
+
 }

@@ -18,6 +18,6 @@
         android:title="@string/shop" />
     <item
         android:id="@+id/profile"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@drawable/banana_icon"
         android:title="@string/profile" />
 </menu>
