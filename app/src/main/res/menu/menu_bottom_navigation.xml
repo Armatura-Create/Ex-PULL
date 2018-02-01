@@ -6,7 +6,7 @@
         android:title="@string/crash"/>
     <item
         android:id="@+id/roulette"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@drawable/roulette"
         android:title="@string/roulette" />
     <item
         android:id="@+id/chat"
@@ -14,7 +14,7 @@
         android:title="@string/chat" />
     <item
         android:id="@+id/shop"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@drawable/shop_icon"
         android:title="@string/shop" />
     <item
         android:id="@+id/profile"

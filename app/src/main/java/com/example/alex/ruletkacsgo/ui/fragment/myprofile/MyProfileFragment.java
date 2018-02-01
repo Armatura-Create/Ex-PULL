@@ -15,7 +15,7 @@ import com.example.alex.ruletkacsgo.ui.activity.settings.SettingsActivity;
  * Created by alex on 25.01.18.
  */
 
-public class MyProfileFragment extends android.support.v4.app.Fragment implements MyProfileContract{
+public class MyProfileFragment extends android.support.v4.app.Fragment implements MyProfileContract.View {
 
     private Button button;
 
@@ -26,8 +26,6 @@ public class MyProfileFragment extends android.support.v4.app.Fragment implement
 
         button = view.findViewById(R.id.btn_settings);
 
-//        MyProfilePresenter presenter = new MyProfilePresenter();
-//        presenter.onButtonClick(button);
 
         button.setOnClickListener(view1 -> {
             startActivity(new Intent(getActivity(), SettingsActivity.class));
@@ -45,9 +43,6 @@ public class MyProfileFragment extends android.support.v4.app.Fragment implement
         return new MyProfileFragment();
     }
 
-    @Override
-    public void onButtonClick(Button button) {
 
-    }
 }
 

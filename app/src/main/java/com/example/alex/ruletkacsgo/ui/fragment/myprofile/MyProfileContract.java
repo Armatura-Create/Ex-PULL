@@ -1,11 +1,17 @@
 package com.example.alex.ruletkacsgo.ui.fragment.myprofile;
 
-import android.widget.Button;
+import android.content.Context;
 
 /**
  * Created by arthur on 01.02.18.
  */
 
 public interface MyProfileContract {
-    void onButtonClick(Button button);
+    interface EventListener {
+
+    }
+
+    interface View {
+        Context getContext();
+    }
 }
