@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_user_message"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_round"
+            app:civ_border_color="#555555"
+            app:civ_border_width="1dp"/>
+
         <TextView
             android:id="@+id/message_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:textStyle="normal|bold"/>
+            android:layout_marginLeft="15px"
+            android:layout_toEndOf="@+id/image_user_message"
+            android:textStyle="normal|bold"
+            android:textColor="@color/white"
+            tools:text="AAAAAAAAAA"/>
 
         <TextView
             android:id="@+id/message_time"
+            android:layout_marginLeft="10px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/message_user"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentTop="true"
+            android:textColor="@color/orange_special"
+            android:layout_toEndOf="@+id/message_user"
+            tools:text="AAAAAAAAAA"/>
 
         <TextView
             android:id="@+id/message_text"
+            android:layout_marginLeft="15px"
+            android:layout_marginTop="10px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/message_user"
-            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/image_user_message"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            tools:text="AAAAAAAAAA"/>
     </RelativeLayout>
 </layout>

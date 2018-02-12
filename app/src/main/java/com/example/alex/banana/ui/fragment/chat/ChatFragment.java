@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alex.banana.R;
 import com.example.alex.banana.models.ChatMessage;
@@ -61,13 +62,16 @@ public class ChatFragment extends android.support.v4.app.Fragment {
         fab.setOnClickListener(v -> {
             // Read the input field and push a new instance
             // of ChatMessage to the Firebase database
-            FirebaseDatabase.getInstance()
-                    .getReference()
-                    .push()
-                    .setValue(new ChatMessage(input.getText().toString(),
-                            FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
-                    );
-
+            if(String.valueOf(input.getText()).trim() != "") {
+                FirebaseDatabase.getInstance()
+                        .getReference()
+                        .push()
+                        .setValue(new ChatMessage(input.getText().toString(),
+                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
+                        );
+            } else {
+                Toast.makeText(v.getContext(), "Please entered text", Toast.LENGTH_SHORT).show();
+            }
             // Clear the input
             input.setText("");
         });

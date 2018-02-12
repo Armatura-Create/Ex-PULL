@@ -42,8 +42,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    //circleImageView
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
-//  Firebase
+    //  Firebase
     compile 'com.firebaseui:firebase-ui:0.6.0'
 
     //retrofit
