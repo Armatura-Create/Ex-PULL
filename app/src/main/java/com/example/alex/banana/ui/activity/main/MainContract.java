@@ -14,5 +14,6 @@ public interface MainContract {
 
     interface EventListener {
         void setUpViewPager(ViewPager pager);
+        void viewMany();
     }
 }

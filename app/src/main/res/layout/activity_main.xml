@@ -36,6 +36,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/many_liner"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="15"
@@ -44,9 +45,10 @@
 
                     <ImageView
                         android:id="@+id/image_many"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_menu_camera"/>
+                        android:layout_width="55px"
+                        android:layout_height="55px"
+                        android:layout_gravity="center"
+                        android:src="@drawable/illuminati_icon"/>
 
                     <TextView
                         android:id="@+id/tv_count_many"

@@ -22,14 +22,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
-        implements MainContract.View, AHBottomNavigation.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+        implements MainContract.View, AHBottomNavigation.OnTabSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
     private static final int SIGN_IN_REQUEST_CODE = 100;
     private ActivityMainBinding mBinding;
     private View mDecorView;
     private AHBottomNavigationAdapter navigationAdapter;
     private MainPresenter mPresenter;
     private int[] tabColors;
-    private boolean tapOnBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        tapOnBar = true;
-
         tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -52,24 +49,11 @@ public class MainActivity extends AppCompatActivity
         mPresenter = new MainPresenter(this, mBinding);
         mPresenter.setUpViewPager(mBinding.pager);
 
-        mBinding.pager.addOnPageChangeListener(this);
-        mBinding.pager.setOffscreenPageLimit(5);
+        setListener();
 
         mDecorView = getWindow().getDecorView();
 
-        navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
-        navigationAdapter.setupWithBottomNavigation(mBinding.bottomNavigation, tabColors);
-
-        mBinding.bottomNavigation.setNotification("1", 2);
-
-        mBinding.bottomNavigation.setOnTabSelectedListener(this);
-
-        mBinding.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
-        mBinding.bottomNavigation.setTranslucentNavigationEnabled(true);
-        mBinding.bottomNavigation.setColored(true);
-        mBinding.bottomNavigation.setAccentColor(getResources().getColor(R.color.orange_special));
-        mBinding.bottomNavigation.setInactiveColor(getResources().getColor(R.color.white));
-        mBinding.bottomNavigation.setSelectedBackgroundVisible(true);
+        setSettingsBottomMenu();
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             // Start sign in/sign up activity
@@ -93,6 +77,27 @@ public class MainActivity extends AppCompatActivity
             displayChatMessages();
         }
 
+    }
+
+    private void setListener() {
+        mBinding.manyLiner.setOnClickListener(this);
+
+        mBinding.pager.addOnPageChangeListener(this);
+        mBinding.pager.setOffscreenPageLimit(5);
+    }
+
+    private void setSettingsBottomMenu() {
+        navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
+        navigationAdapter.setupWithBottomNavigation(mBinding.bottomNavigation, tabColors);
+        mBinding.bottomNavigation.setOnTabSelectedListener(this);
+        mBinding.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+        mBinding.bottomNavigation.setTranslucentNavigationEnabled(true);
+        mBinding.bottomNavigation.setColored(true);
+        mBinding.bottomNavigation.setAccentColor(getResources().getColor(R.color.orange_special));
+        mBinding.bottomNavigation.setInactiveColor(getResources().getColor(R.color.white));
+        mBinding.bottomNavigation.setSelectedBackgroundVisible(true);
+        //test notification
+        mBinding.bottomNavigation.setNotification("1", 2);
     }
 
     private void displayChatMessages() {
@@ -173,9 +178,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
-        Log.e("onTabSelected: ", String.valueOf(position));
-        tapOnBar = false;
-        mBinding.pager.setCurrentItem(position, true);
+        mBinding.pager.setCurrentItem(position);
         if (position == 2) {
             mBinding.bottomNavigation.setNotification("", 2);
         } else {
@@ -184,4 +187,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.many_liner:
+                mPresenter.viewMany();
+                break;
+
+        }
+    }
 }

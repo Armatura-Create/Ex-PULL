@@ -3,6 +3,7 @@ package com.example.alex.banana.ui.activity.main;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.example.alex.banana.databinding.ActivityMainBinding;
 import com.example.alex.banana.ui.fragment.chat.ChatFragment;
@@ -59,6 +60,11 @@ public class MainPresenter implements MainContract.EventListener {
 
             pager.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void viewMany() {
+        Toast.makeText(mView.getContext(), "YourMany", Toast.LENGTH_SHORT).show();
     }
 
     public HashMap<String, Fragment> getFragmentsMap() {

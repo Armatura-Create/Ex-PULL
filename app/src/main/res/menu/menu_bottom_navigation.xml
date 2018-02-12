@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/crash"
-        android:icon="@android:drawable/ic_dialog_map"
+        android:icon="@drawable/crash_ikon"
         android:title="@string/crash"/>
     <item
         android:id="@+id/roulette"
@@ -10,7 +10,7 @@
         android:title="@string/roulette" />
     <item
         android:id="@+id/chat"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@drawable/message_icon"
         android:title="@string/chat" />
     <item
         android:id="@+id/shop"
